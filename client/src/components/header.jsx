@@ -6,6 +6,8 @@ const Header = () => {
         // Handle logout logic here
     };
 
+    const name = (window.location.href).split('#')[1];
+
     return (
         <AppBar position="static" sx={{marginBottom: 2}}>
             <Toolbar>
@@ -13,7 +15,7 @@ const Header = () => {
                     My App
                 </Typography>
                 <Typography variant="body1" sx={{ marginRight: 2 }}>
-                    Username
+                    {name}
                 </Typography>
                 <Button color="inherit" onClick={handleLogout}>
                     Logout

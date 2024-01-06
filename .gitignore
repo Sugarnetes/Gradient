@@ -217,3 +217,5 @@ cython_debug/
 #.idea/
 
 firebase_credentials/hacked*
+
+.idea

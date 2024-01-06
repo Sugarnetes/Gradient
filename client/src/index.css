@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  font-family: 'Ubuntu Mono';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--main-text);
+} 

@@ -2,5 +2,7 @@
 
 .home_layout{
     padding-top: 20;
+    padding-left: 10;
+    padding-right: 10;
     height: 90vh; 
 }

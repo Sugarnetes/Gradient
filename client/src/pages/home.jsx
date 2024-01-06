@@ -6,6 +6,9 @@ import Grid from '@mui/material/Grid';
 import './style.css';
 
 export const Home = () => {
+
+    const name = (window.location.href).split('#')[1];
+
     return (
         <div>
             <Header margin='20'/>

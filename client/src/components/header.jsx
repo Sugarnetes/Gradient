@@ -2,9 +2,6 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 const Header = () => {
-    const handleLogout = () => {
-        // Handle logout logic here
-    };
 
     const name = (window.location.href).split('#')[1];
 
@@ -17,7 +14,7 @@ const Header = () => {
                 <Typography variant="body1" sx={{ marginRight: 2 }}>
                     {name}
                 </Typography>
-                <Button color="inherit" onClick={handleLogout}>
+                <Button color="inherit" href='/'>
                     Logout
                 </Button>
             </Toolbar>

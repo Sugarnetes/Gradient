@@ -1,10 +1,13 @@
-import { Typography } from "@mui/material";
+import React from 'react';
+import Header from '../components/header';
 
-
-export const Home = () => {
+function Home() {
     return (
-        <Typography>HI</Typography>
+        <div>
+            <Header />
+            <div>Home</div>
+        </div>
     );
 }
-    
+
 export default Home;

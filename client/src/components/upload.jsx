@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
 
 const baseStyle = {
   flex: 1,
@@ -38,15 +39,16 @@ export const Upload = () => {
           formData.append('pdfFile', pdfFiles[0]); // Assuming you only handle one PDF file
     
           try {
-            const response = await fetch('/uploadpdf', {
-              method: 'POST',
-              body: formData,
+            const response = await axios.post('http://localhost:8888/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
-    
-            if (response.ok) {
-              console.log('File uploaded successfully!');
+
+            if (response.status === 200) {
+                console.log('File uploaded successfully!');
             } else {
-              console.error('Failed to upload file.');
+                console.error('Failed to upload file.');
             }
           } catch (error) {
             console.error('Error uploading the file:', error);

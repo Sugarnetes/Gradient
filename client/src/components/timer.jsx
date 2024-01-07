@@ -5,6 +5,7 @@ const Timer = () => {
     const [seconds, setSeconds] = useState(0);
     const [isTimerActive, setIsActive] = useState(false);
     const [timeSelected, setTimeSelected] = useState(0);
+    const [websocket, setWebsocket] = useState(null);
 
     const name = (window.location.href).split('#')[1];
 
@@ -37,21 +38,45 @@ const Timer = () => {
         setSeconds(0);
         setIsActive(false);
         if (isTimerActive) {
+
+            // Create data object to send to Python backend
+            const data = name +','+ timeSelected;
+
+            // Send data to Python backend via WebSocket
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                websocket.send(JSON.stringify(data));}
+
             window.alert(`Time's up! You have completed a ${timeSelected} minute session. Take a break!`);
+    
         }
-
-        /**
-         * TODO: send the timer score over to the backend
-         */
-
-        const data = {
-            username: name,
-            timeCompleted: timeSelected,
-        };
-
         
     }
 
+    //-----------------WEBSOCKET-----------------//
+    useEffect(() => {
+        // Establish WebSocket connection
+        const ws = new WebSocket('ws://localhost:8888/websocket'); // Corrected URL
+        ws.onopen = () => {
+            console.log('WebSocket Connected');
+        };
+        ws.onmessage = (event) => {
+            console.log('Message from server ', event.data);
+        };
+        ws.onerror = (error) => {
+            console.error('WebSocket Error ', error);
+        };
+        ws.onclose = () => {
+            console.log('WebSocket Disconnected');
+        };
+        setWebsocket(ws);
+
+        return () => {
+            ws.close(); // Close WebSocket when component unmounts
+        };
+    }, []);
+
+
+    //-----------------TIMER-----------------//
     useEffect(() => {
         let interval = null;
         if (isTimerActive && seconds > 0) {
@@ -78,7 +103,7 @@ const Timer = () => {
                     {formatTime()}
                 </div>
                 <div className="buttons">
-                    <button onClick={() => setTime(25)}>25 min</button>
+                    <button onClick={() => setTime(0.05)}>25 min</button>
                     <button onClick={() => setTime(50)}>50 min</button>
                     <button onClick={toggle}>
                         {isTimerActive ? 'Pause' : 'Start'}

@@ -104,7 +104,7 @@ if __name__ == "__main__":
     app.listen(8888)
     # Need to register the application in main, before being able to freely access db
     cred = credentials.Certificate(
-        "server/firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json")
+        "firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json")
     app = firebase_admin.initialize_app(cred)
 
     print("Server started.")

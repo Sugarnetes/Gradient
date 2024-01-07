@@ -1,4 +1,3 @@
-
 from firebase_admin import firestore
 
 class Account:

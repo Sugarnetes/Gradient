@@ -21,7 +21,7 @@ export const Home = () => {
 
                 {/* Left Column */}
                 <Grid item xs={2.5} className='Grid-item'>
-                    <Grid container direction="column" spacing={2} style={{ height: '100%' }}>
+                    <Grid container direction="column" spacing={2} style={{ height: '100%',marginTop: '18px'  }}>
                     
                         {/* Left Column - First Box */}
                         <Grid item xs style={{ height: '100%' }}>
@@ -35,12 +35,22 @@ export const Home = () => {
 
                 {/* Middle Column */}
                 <Grid item xs={6.5} className='Grid-item'>
-                    <Grid item xs style={{ height: '100%' }}>
-                        <Paper className='Paper'>
-                            <div className='center'>
-                                <h1>Welcome to Gradient, {name}!</h1>
-                                <h3>Let's get studying!</h3>
+                    <Grid item xs style={{ height: '100%', marginTop: '35px' }}>
+                        <Paper className='Paper' >
+                        <div className='text-container' style={{ marginLeft: '20px' }}>
+                                <h1>   Welcome to Gradient, {name}!</h1>
+                                <h3>   Let's get studying!</h3>
                             </div>
+          {/* Add an empty outlined box with a div */}
+          <div
+            className='additional-box'
+            style={{
+              border: '2px solid lightgray',
+              borderRadius: '8px',
+              margin: '20px',
+              height: '500px', // Adjust the height as needed
+            }}
+          ></div>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -50,7 +60,7 @@ export const Home = () => {
                     <Grid container direction="column" spacing={2} style={{ height: '100%' }}>
                     
                         {/* Right Column - First Box */}
-                        <Grid item xs style={{ height: '100%' }}>
+                        <Grid item xs style={{ height: '100%', marginTop: '35px'  }}>
                             <Paper className='Paper'>
                                 <Timer />
                             </Paper>

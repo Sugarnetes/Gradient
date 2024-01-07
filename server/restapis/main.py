@@ -12,6 +12,7 @@ import os.path
 from summarizer import Summarize
 from pdfreader import PdfReader
 import sys
+import json
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
@@ -73,7 +74,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print(leaderboard_data)
         
         # Send the leaderboard data to the client
-        self.write_message(leaderboard_data)
+        self.write_message(json.dumps(leaderboard_data))
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):

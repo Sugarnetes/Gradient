@@ -2,6 +2,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import tornado.websocket
 import os.path
 import random
 import string
@@ -11,9 +12,25 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", IndexHandler),
-            (r"/upload", UploadHandler)
+            (r"/upload", UploadHandler),
+            (r"/websocket", WebSocketHandler),
         ]
         tornado.web.Application.__init__(self, handlers)
+
+'''
+ Websocket handler for communicating between client timer and server
+'''
+class WebSocketHandler(tornado.websocket.WebSocketHandler):
+    def open(self):
+        print("WebSocket opened")
+
+    def on_message(self, message):
+        print("Received message:", message)
+        # Here you can handle the message
+        # For example, parse JSON and process data
+
+    def on_close(self):
+        print("WebSocket closed")
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
@@ -41,6 +58,7 @@ def make_app():
     return tornado.web.Application([
         (r"/", IndexHandler),  # Add a handler for the root URL
         (r"/upload", UploadHandler),
+        (r"/websocket", WebSocketHandler),
     ])
 
 if __name__ == "__main__":

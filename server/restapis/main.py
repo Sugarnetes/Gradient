@@ -53,8 +53,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         target_account.save_to_db(db_handler.get_db())
         
         print(f"{name}'s score updated")
+        self.update_leaderboard()
         
-
     def on_close(self):
         print("WebSocket closed")
     
@@ -74,10 +74,6 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         
         # Send the leaderboard data to the client
         self.write_message(leaderboard_data)
-
-    def on_message(self, message):
-        print(message)
-        self.update_leaderboard()
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):

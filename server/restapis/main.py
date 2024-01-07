@@ -21,13 +21,16 @@ class Application(tornado.web.Application):
  Websocket handler for communicating between client timer and server
 '''
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
+    def check_origin(self, origin):
+        # Allow connections from any origin, or implement your own logic
+        return True
+
     def open(self):
         print("WebSocket opened")
 
     def on_message(self, message):
-        print("Received message:", message)
-        # Here you can handle the message
-        # For example, parse JSON and process data
+        print(message) 
+        # Handle incoming WebSocket message
 
     def on_close(self):
         print("WebSocket closed")

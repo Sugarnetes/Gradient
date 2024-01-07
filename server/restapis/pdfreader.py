@@ -20,6 +20,7 @@ class PdfReader():
         pages = convert_from_path(self.file_name, poppler_path=poppler_path)
         text_to_return = ""
         list_of_topics = []
+        list_of_content = []
 
         for page in pages:
             text = pytesseract.image_to_string(page)
@@ -29,12 +30,11 @@ class PdfReader():
                 list_of_topics.append(list_of_text[0])
                 list_of_text[0] = "Topic: " + list_of_text[0]
                 list_of_text.insert(1, "Bullet Points: ")
-                list_of_text[0] = list_of_text[0] + ", " + list_of_text[1]
-                list_of_text.pop(1)
-                text_to_return += list_of_text[0] + ", ".join(list_of_text[1::]) + "\n"
-
-        print(text_to_return, list_of_topics)
-        return text_to_return, list_of_topics
+                list_of_text[0] = list_of_text[0]
+                text_to_return = [list_of_text[0], list_of_text[1] + ", ".join(list_of_text[2::])]
+                list_of_content.append(text_to_return)
+        print(list_of_content)
+        return list_of_content, list_of_topics
 
 
 if __name__ == "__main__":

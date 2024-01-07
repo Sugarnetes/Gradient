@@ -7,6 +7,7 @@ import random
 import string
 from pdfreader import PdfReader
 
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -15,13 +16,15 @@ class Application(tornado.web.Application):
         ]
         tornado.web.Application.__init__(self, handlers)
 
+
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("tornadoUpload.html")
 
+
 class UploadHandler(tornado.web.RequestHandler):
     def post(self):
-        files = self.request.files.get('file', []) # allows a file with any name to be uploaded
+        files = self.request.files.get('file', [])  # allows a file with any name to be uploaded
         for file_data in files:
             original_fname = file_data['filename']
             upload_path = "uploads/"
@@ -37,11 +40,13 @@ class UploadHandler(tornado.web.RequestHandler):
             output_file.write(file_data['body'])
             output_file.close()
 
+
 def make_app():
     return tornado.web.Application([
         (r"/", IndexHandler),  # Add a handler for the root URL
         (r"/upload", UploadHandler),
     ])
+
 
 if __name__ == "__main__":
     app = make_app()

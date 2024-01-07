@@ -49,7 +49,7 @@ def make_app():
 
 
 if __name__ == "__main__":
-    app = make_app()
+    app = Application()
     app.listen(8888)
     print("Server started.")
     tornado.ioloop.IOLoop.current().start()

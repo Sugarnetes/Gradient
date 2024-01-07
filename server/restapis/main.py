@@ -8,6 +8,16 @@ import random
 import string
 from summarizer import Summarize
 from pdfreader import PdfReader
+import os.path
+from summarizer import Summarize
+from pdfreader import PdfReader
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from gradient.my_db_handler import DatabaseHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -25,11 +35,29 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print("WebSocket opened")
 
-    def on_message(self, message):
-        print(message)
-
     def on_close(self):
         print("WebSocket closed")
+    
+    def update_leaderboard(self):
+        db_handler = DatabaseHandler('server/firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json')
+        all_users = db_handler.get_all_users_points()
+        leaderboard_data = [
+            {"username": user.username, "points": user.points}
+            for user in all_users
+        ]
+        
+        # Add rank to the leaderboard data
+        for index, user in enumerate(leaderboard_data, start=1):
+            user["rank"] = index
+
+        print(leaderboard_data)
+        
+        # Send the leaderboard data to the client
+        self.write_message(leaderboard_data)
+
+    def on_message(self, message):
+        print(message)
+        self.update_leaderboard()
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):

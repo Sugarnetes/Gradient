@@ -1,6 +1,13 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
+
+from account import Account
 
 
 class DatabaseHandler:
@@ -50,3 +57,8 @@ class DatabaseHandler:
     def get_db(self):
         return self.db
 
+    def get_all_users_points(self):
+        query = self.user_collection().order_by("points", direction=firestore.Query.DESCENDING)
+        docs = query.stream()
+        return [Account.from_dict(x.to_dict()) for x in docs]
+    

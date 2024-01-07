@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 40vh;
+    height: 30vh;
 }
 
 .time {
@@ -13,17 +13,32 @@
 
 .buttons {
     display: flex;
-    gap: 10px; /* Adjust the spacing between buttons */
+    gap: 5px; /* Adjust the spacing between buttons */
 }
 
 .buttons button {
-    padding: 10px 20px; /* Padding inside buttons */
-    font-size: 1em; /* Adjust button font size as needed */
-    cursor: pointer; /* Changes cursor to pointer when hovering over buttons */
-    outline: none; /* Removes the outline around buttons when focused */
-    border: none; /* Removes the default border of buttons */
-    background-color: #f0f0f0; /* Light grey background for the buttons */
-    border-radius: 5px; /* Rounded corners for buttons */
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Start button style */
+.buttons .start-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+/* Stop button style */
+.buttons .stop-button {
+    background-color: #FF0000; /* Red */
+    color: white;
+}
+.buttons .pause-button {
+    background-color: #2196F3; /* Blue */
+    color: white;
 }
 
 .buttons button:hover {

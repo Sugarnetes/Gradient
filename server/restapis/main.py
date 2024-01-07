@@ -3,80 +3,68 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.websocket
+from firebase_admin import credentials
+import firebase_admin
 import os.path
 from summarizer import Summarize
+from pdfreader import PdfReader
+import sys
+mod_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if mod_path not in sys.path:
+    sys.path.insert(1, mod_path)
+del mod_path
+from gradient.account import Account
+from gradient.my_db_handler import DatabaseHandler
+
+class Application(tornado.web.Application):
+    def __init__(self):
+        handlers = [
+            (r"/", IndexHandler),
+            (r"/upload", UploadHandler),
+            (r"/websocket", WebSocketHandler),
+        ]
+        tornado.web.Application.__init__(self, handlers)
+
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
-    clients = set()
-    initial_load_completed = False
-
     def check_origin(self, origin):
         return True
 
     def open(self):
         print("WebSocket opened")
-        WebSocketHandler.clients.add(self)
 
-        if not WebSocketHandler.initial_load_completed:
-            generated_file_path = r"C:\umer files\Programming PREJE'S\Gradient\server\summarized_content.pdf"
-            if os.path.exists(generated_file_path):
-                with open(generated_file_path, 'rb') as file:
-                    file_data = file.read()
-                    self.write_message(file_data, binary=True)
-            else:
-                self.write_message("Generated file not found")
+    def on_message(self, message: str):
+        """Accepts message from client timer, and updates the db with the new score.
 
-    def on_message(self, message):
-        if message == "request_summary_file" and self.application.uploaded_file_path:
-            generated_file_path = r"C:\umer files\Programming PREJE'S\Gradient\server\summarized_content.pdf"
-            if os.path.exists(generated_file_path):
-                with open(generated_file_path, 'rb') as file:
-                    file_data = file.read()
-                    self.write_message(file_data, binary=True)
-            else:
-                self.write_message("Generated file not found")
-        elif message == "delete_file_request":
-            self.delete_generated_file()
+        Args:
+            message (str): _description_
+        """
+        db_handler = DatabaseHandler()
+        name, time_spent_string = message[1:-1].split(',')
+        time_spent = float(time_spent_string)
+        db_hash = db_handler.get_user_hash(name)
+        target_account = Account.from_dict(db_hash)
+        target_account.add_time(time_spent)
 
-        elif message == "initial_load_completed":
-            WebSocketHandler.initial_load_completed = True
-
-    def delete_generated_file(self):
-        if self.application.uploaded_file_path:
-            os.remove(self.application.uploaded_file_path)
-            self.application.uploaded_file_path = None
-            print("File deleted successfully")
-        else:
-            print("File not found or already deleted")
+        target_account.save_to_db(db_handler.get_db())
+        
+        print(f"{name}'s score updated")
+        
 
     def on_close(self):
         print("WebSocket closed")
-        WebSocketHandler.clients.remove(self)
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("tornadoUpload.html")
 
 class UploadHandler(tornado.web.RequestHandler):
-    async def send_file_through_websocket(self, file_path):
-        ws_clients = WebSocketHandler.clients
-        if ws_clients:
-            for client in ws_clients:
-                file_data = None
-                if os.path.exists(file_path):
-                    with open(file_path, 'rb') as file:
-                        file_data = file.read()
-                if file_data:
-                    await client.write_message(file_data, binary=True)
-                else:
-                    await client.write_message("Generated file not found")
-
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "http://localhost:3003")
         self.set_header("Access-Control-Allow-Headers", "Content-Type")
         self.set_header("Access-Control-Allow-Methods", "POST")
 
-    async def post(self):
+    def post(self):
         uploaded_file = self.request.files.get('pdfFile')
         if uploaded_file:
             file_data = uploaded_file[0]['body']
@@ -85,23 +73,20 @@ class UploadHandler(tornado.web.RequestHandler):
             current_directory = os.path.dirname(os.path.abspath(__file__))
             upload_path = os.path.join(current_directory, 'uploads')
 
+            # Ensure the directory exists or create it
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
 
+            # Sanitize the filename
             sanitized_file_name = ''.join(c for c in file_name if c.isalnum() or c in ['.', '_', '-'])
             output_file_path = os.path.join(upload_path, sanitized_file_name)
             print("Saving file to:", output_file_path)
-
-            self.application.uploaded_file_path = output_file_path
-
-            with open(output_file_path, 'wb') as output_file:
-                output_file.write(file_data)
+            output_file = open(output_file_path, 'wb')
+            output_file.write(file_data)
+            output_file.close()
 
             ans = Summarize(output_file_path)
             ans.execute_summary()
-
-            await self.send_file_through_websocket(r"C:\umer files\Programming PREJE'S\Gradient\server\summarized_content.pdf")
-
             self.write('File uploaded successfully!')
         else:
             self.set_status(400)
@@ -115,7 +100,12 @@ def make_app():
     ])
 
 if __name__ == "__main__":
-    app = make_app()
+    app = make_app()    # Making websocket application
     app.listen(8888)
+    # Need to register the application in main, before being able to freely access db
+    cred = credentials.Certificate(
+        "firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json")
+    app = firebase_admin.initialize_app(cred)
+
     print("Server started.")
     tornado.ioloop.IOLoop.current().start()

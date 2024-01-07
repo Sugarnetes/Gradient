@@ -43,7 +43,7 @@ export const Upload = () => {
       formData.append('pdfFile', pdfFiles[0]);
 
       try {
-        const response = await axios.post('http://localhost:8888/upload', formData, {
+        const response = await axios.post('http://localhost:8000/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -63,7 +63,7 @@ export const Upload = () => {
   }, []);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8888/websocket');
+    const ws = new WebSocket('ws://localhost:8000/websocket');
     let isInitialLoad = true;
   
     ws.onopen = () => {

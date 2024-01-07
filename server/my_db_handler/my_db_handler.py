@@ -4,8 +4,8 @@ from firebase_admin import firestore
 
 
 class DatabaseHandler:
-    def __init__(self):
-        self.cred = credentials.Certificate("firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json")
+    def __init__(self, certificate_json_path):
+        self.cred = credentials.Certificate(certificate_json_path)
         self.app = firebase_admin.initialize_app(self.cred)
         self.db = firestore.client()
     

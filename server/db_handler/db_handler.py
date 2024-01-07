@@ -34,14 +34,30 @@ class DatabaseHandler:
     def save_to_db(self, db):
         doc_ref = db.collection("users").document(self.username)
         doc_ref.set(self.to_dict())
-    def save_to_db(self, db):
-        doc_ref = db.collection("users").document(self.username)
-        doc_ref.set(self.to_dict())
+
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
     doc_ref = db_handler.user_collection().document("testing")
     doc_ref.set({"first": "Bach"})
+    
+    ##test points 
+    username = "testing"
+    time_spent = 50  # Assuming time spent in minutes
+    account_instance = Account(username, time_spent)
+    account_instance.save_to_db(db_handler.db)
+
+
+    #test retuning users 
     all_users = db_handler.get_all_users()
-    for user in all_users:
-        print(f"Username: {user.username}")
+
+    if all_users:
+        print("All Users:")
+        for user in all_users:
+            print("Username:", user.username)
+            print("Time Spent:", user.time_spent)
+            print("Points:", user.points)
+            print("---")
+    else:
+        print("No users found.")
+    

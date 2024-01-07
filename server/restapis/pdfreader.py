@@ -19,17 +19,22 @@ class PdfReader():
         # Extract text from PDF using pdf2image and pytesseract
         pages = convert_from_path(self.file_name, poppler_path=poppler_path)
         text_to_return = ""
+        list_of_topics = []
+
         for page in pages:
             text = pytesseract.image_to_string(page)
             list_of_text = text.split('\n')
             if list_of_text[1] == '':
                 list_of_text.pop(1)
+                list_of_topics.append(list_of_text[0])
                 list_of_text[0] = "Topic: " + list_of_text[0]
                 list_of_text.insert(1, "Bullet Points: ")
                 list_of_text[0] = list_of_text[0] + ", " + list_of_text[1]
                 list_of_text.pop(1)
                 text_to_return += list_of_text[0] + ", ".join(list_of_text[1::]) + "\n"
-        return text_to_return
+
+        print(text_to_return, list_of_topics)
+        return text_to_return, list_of_topics
 
 
 if __name__ == "__main__":

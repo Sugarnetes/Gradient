@@ -1,0 +1,31 @@
+.timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+}
+
+.time {
+    font-size: 3em; /* Adjust as needed to cover 50% length of the buttons */
+    margin-bottom: 20px; /* Spacing between the timer and the buttons */
+}
+
+.buttons {
+    display: flex;
+    gap: 10px; /* Adjust the spacing between buttons */
+}
+
+.buttons button {
+    padding: 10px 20px; /* Padding inside buttons */
+    font-size: 1em; /* Adjust button font size as needed */
+    cursor: pointer; /* Changes cursor to pointer when hovering over buttons */
+    outline: none; /* Removes the outline around buttons when focused */
+    border: none; /* Removes the default border of buttons */
+    background-color: #f0f0f0; /* Light grey background for the buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+}
+
+.buttons button:hover {
+    background-color: #e0e0e0; /* Slightly darker grey on hover */
+}

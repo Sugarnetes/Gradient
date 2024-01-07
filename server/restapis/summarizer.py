@@ -32,6 +32,6 @@ class Summarizer():
         return massive_text
 
 if __name__ == "__main__":
-    pdfTest = Summarizer(r"C:\umer files\Programming PREJE'S\Medicall\server\restapis\denis.pdf")
+    pdfTest = Summarizer(r"C:\umer files\Programming PREJE'S\Gradient\server\restapis\denis.pdf")
     
     pdfTest.execute_summary()

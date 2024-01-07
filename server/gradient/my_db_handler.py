@@ -31,6 +31,6 @@ class DatabaseHandler:
 
 
 if __name__ == "__main__":
-    db_handler = DatabaseHandler()
+    db_handler = DatabaseHandler("server/firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json")
     doc_ref = db_handler.user_collection().document("testing")
     doc_ref.set({"first": "Bach"})

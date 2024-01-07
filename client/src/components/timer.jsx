@@ -99,16 +99,17 @@ const Timer = () => {
     return (
         <>
             <div className="timer">
+                <h1>Timer</h1>
                 <div className="time">
                     {formatTime()}
                 </div>
                 <div className="buttons">
                     <button onClick={() => setTime(0.05)}>25 min</button>
                     <button onClick={() => setTime(50)}>50 min</button>
-                    <button onClick={toggle}>
+                    <button onClick={toggle}className={isTimerActive ? 'pause-button' : 'start-button'}>
                         {isTimerActive ? 'Pause' : 'Start'}
                     </button>
-                    <button onClick={reset}>End</button>
+                    <button onClick={reset}className="stop-button">End</button>
                 </div>
             </div>
         </>

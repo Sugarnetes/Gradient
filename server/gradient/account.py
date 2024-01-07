@@ -34,4 +34,15 @@ class Account:
         else:
             return False
 
-   
+    @staticmethod
+    def retrieve_from_db_ordered_by_points(db):
+        query = db.collection("users").order_by("points", direction=firestore.Query.DESCENDING)
+        docs = query.stream()
+
+        accounts = []
+        for doc in docs:
+            account_data = doc.to_dict()
+            account = Account.from_dict(account_data)
+            accounts.append(account)
+
+        return accounts

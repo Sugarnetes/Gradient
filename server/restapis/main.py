@@ -8,11 +8,16 @@ import firebase_admin
 import os.path
 from summarizer import Summarize
 from pdfreader import PdfReader
+import os.path
+from summarizer import Summarize
+from pdfreader import PdfReader
 import sys
-mod_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if mod_path not in sys.path:
-    sys.path.insert(1, mod_path)
-del mod_path
+import json
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
 from gradient.account import Account
 from gradient.my_db_handler import DatabaseHandler
 
@@ -49,10 +54,27 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         target_account.save_to_db(db_handler.get_db())
         
         print(f"{name}'s score updated")
+        self.update_leaderboard()
         
-
     def on_close(self):
         print("WebSocket closed")
+    
+    def update_leaderboard(self):
+        db_handler = DatabaseHandler()
+        all_users = db_handler.get_all_users_points()
+        leaderboard_data = [
+            {"username": user.username, "points": user.points}
+            for user in all_users
+        ]
+        
+        # Add rank to the leaderboard data
+        for index, user in enumerate(leaderboard_data, start=1):
+            user["rank"] = index
+
+        temp = json.dumps(leaderboard_data)
+        print(temp)
+        # Send the leaderboard data to the client
+        self.write_message(temp)
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):

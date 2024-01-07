@@ -1,9 +1,11 @@
 # importing modules
 from reportlab.pdfgen import canvas
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Frame
+from reportlab.lib.units import inch
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from reportlab.lib import colors
-
 
 
 class PdfHandler:
@@ -16,6 +18,7 @@ class PdfHandler:
         self.pdf.setTitle(document_title)
         self.x = 40
         self.y = 800
+        self.style_sheet = getSampleStyleSheet()
 
     def write_title(self, text: str):
         """Writes the title text.
@@ -45,7 +48,6 @@ class PdfHandler:
         self.pdf.setFillColorRGB(0, 0, 0)
 
         for line in texts:
-
             text.textLine(line)
 
         self._decrement_y(20 * (num_lines - 1))
@@ -55,7 +57,6 @@ class PdfHandler:
     def _decrement_y(self, value: int):
         """Needed for manual cursor shifting """
         self.y -= value
-
 
     def save(self):
         self.pdf.save()
@@ -67,7 +68,7 @@ if __name__ == "__main__":
     pdf_handler.write_sub_title("testing sub title")
     lst = [
         "Something",
-        "Longer sentence is here. Hahahahahahahahhahahahahhahahahahahhahahahahhahahahhahahahha.",
+        "Longer sentence is here. Hahahahahahahahhahahahahh.",
         "Another one bites the dust"
     ]
 

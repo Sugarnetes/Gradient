@@ -3,45 +3,58 @@ import './timer.css';
 
 const Timer = () => {
     const [seconds, setSeconds] = useState(0);
-    const [isActive, setIsActive] = useState(false);
+    const [isTimerActive, setIsActive] = useState(false);
     const [timeSelected, setTimeSelected] = useState(0);
 
     const toggle = () => {
-        setIsActive(!isActive);
+        if (seconds === 0) {
+            window.alert("Please select a time before starting the timer.");
+            return;
+        }
+        setIsActive(!isTimerActive);
     }
 
     const reset = () => {
-        if (isActive && window.confirm("Are you sure you want to stop the timer?")) {
-            setSeconds(0);
+        if (!isTimerActive || window.confirm("Are you sure you want to stop the timer?")) { //timer is not active or user confirms
             setIsActive(false);
+            setSeconds(0);
             setTimeSelected(0);
         }
     }
 
     const setTime = (minutes) => {
+        if (isTimerActive) {
+            window.alert("Please End the timer before changing the time.");
+            return;
+        }
         setSeconds(minutes * 60);
         setTimeSelected(minutes);
     }
 
+    const complete = () => {
+        setSeconds(0);
+        setIsActive(false);
+        if (isTimerActive) {
+            window.alert(`Time's up! You have completed a ${timeSelected} minute session. Take a break!`);
+        }
+
+        /**
+         * TODO: send the timer score over to the backend
+         */
+    }
+
     useEffect(() => {
         let interval = null;
-        if (isActive) {
+        if (isTimerActive && seconds > 0) {
             interval = setInterval(() => {
-                setSeconds(seconds => {
-                    if (seconds > 0) {
-                        return seconds - 1;
-                    } else {
-                        setIsActive(false);
-                        setTimeSelected(time => time > 0 ? time : 0);
-                        return 0;
-                    }
-                });
+                setSeconds(seconds => seconds - 1);
             }, 1000);
-        } else if (!isActive && seconds !== 0) {
-            clearInterval(interval);
+        } else if (isTimerActive && seconds === 0) {
+            complete();
         }
+
         return () => clearInterval(interval);
-    }, [isActive, seconds]);
+    }, [isTimerActive, seconds]);
 
     const formatTime = () => {
         const minutes = Math.floor(seconds / 60);
@@ -51,22 +64,23 @@ const Timer = () => {
 
     return (
         <>
-        <div className="timer">
-            <div className="time">
-                {formatTime()}
+            <div className="timer">
+                <div className="time">
+                    {formatTime()}
+                </div>
+                <div className="buttons">
+                    <button onClick={() => setTime(0.05)}>25 min</button>
+                    <button onClick={() => setTime(50)}>50 min</button>
+                    <button onClick={toggle}>
+                        {isTimerActive ? 'Pause' : 'Start'}
+                    </button>
+                    <button onClick={reset}>End</button>
+                </div>
             </div>
-            <div className="buttons">
-                <button onClick={() => setTime(0.1)}>25 min</button>
-                <button onClick={() => setTime(50)}>50 min</button>
-                <button onClick={toggle}>
-                    {isActive ? 'Pause' : 'Start'}
-                </button>
-                <button onClick={reset}>End</button>
+            <div>
+                <p>Time selected: {timeSelected} minutes</p>
+                <p>Timer Active: {isTimerActive ? 'Yes' : 'No'}</p> {/* Displaying the timer's active status */}
             </div>
-        </div>
-        <div>
-            <p>Time selected: {timeSelected}</p>
-        </div>
         </>
     );
 };

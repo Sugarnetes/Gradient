@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/header';
+import Upload from '../components/upload';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -50,7 +51,7 @@ export const Home = () => {
                 {/* Right Column - Second Box */}
                 <Grid item xs>
                     <Paper style={{ height: '100%', backgroundColor: '#eee' }}>
-                    Box 4
+                        <Upload/>
                     </Paper>
                 </Grid>
                 </Grid>

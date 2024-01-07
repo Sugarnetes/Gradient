@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../components/header';
+import Timer from '../components/timer';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import './style.css';
-import Timer from '../components/timer';
 
 export const Home = () => {
 
@@ -33,7 +33,7 @@ export const Home = () => {
             {/* Middle Column */}
             <Grid item xs={6}>
                 <Paper style={{ height: '98%', backgroundColor: '#eee' }}>
-                    Summary + download button
+                      Summary + download button
                 </Paper>
             </Grid>
 

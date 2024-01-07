@@ -1,23 +1,36 @@
-import { Button, Typography, TextField, Stack } from '@mui/material';
+import { Button, Typography, TextField, Stack, createTheme, ThemeProvider, Box } from '@mui/material';
 import React, { useState } from 'react';
+
+const theme = createTheme({
+    typography: {
+      allVariants: {
+        fontFamily: 'Acme',
+        textTransform: 'none',
+        marginBottom: '10pt',
+      },
+    },
+  });
 
 export const Login = () => {
     const [username, setUsername] = useState("");
     return (
-        <div style={{'height': '100%', 'display': 'flex', 'justifyContent': 'center'}}>
-            <Stack spacing={5} marginLeft={2} marginRight={2} justifyContent="center" alignItems="center">
+            <ThemeProvider theme={theme}>
+                <Box display="flex" minHeight="100vh" justifyContent="center" alignItems='center'> 
+            <Stack spacing={5} alignItems="center"
+            sx={{ border: '5px solid black', padding: '5rem', width: 'fit-content' }}>
             <Typography variant="h1">
-                Welcome to APPNAMEEE!
+                Welcome to Gradient
             </Typography>
-            <Typography variant="h3">
+            <Typography variant="h4" fontStyle="italic">
                 Please enter your username to take studying to the next level!
             </Typography>
-            <TextField id="outlined-basic" label="Outlined" variant="outlined" 
+            <TextField id="outlined-basic" label="Username" variant="outlined" 
                 value={username}
                 onChange={e => setUsername(e.target.value)} />
             <Button variant="contained" href={"/dashboard#" + username }>Log In</Button>
             </Stack>    
-        </div>
+            </Box>
+        </ThemeProvider>
     )}
     
     export default Login;

@@ -34,7 +34,6 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print("WebSocket opened")
 
     def on_message(self, message):
-        # This one is expensive
         db_handler = DatabaseHandler()
         name, time_spent_string = message[1:-1].split(',')
         time_spent = float(time_spent_string)
@@ -97,10 +96,12 @@ def make_app():
     ])
 
 if __name__ == "__main__":
-    app = make_app()
+    app = make_app()    # Making websocket application
     app.listen(8888)
+    # Need to register the application in main, before being able to freely access db
     cred = credentials.Certificate(
         "server/firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json")
     app = firebase_admin.initialize_app(cred)
+
     print("Server started.")
     tornado.ioloop.IOLoop.current().start()

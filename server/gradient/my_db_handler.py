@@ -5,7 +5,7 @@ from firebase_admin import firestore
 
 class DatabaseHandler:
     def __init__(self):
-        """For high speed prototyping, we need the firebase app to be initialized in main
+        """The firebase app must be initialized in main for this constructor to work
         """
         self.db = firestore.client()
     
@@ -18,6 +18,14 @@ class DatabaseHandler:
         return self.db.collection("users")
     
     def get_user_hash(self, name: str):
+        """This method gets the dictionary of a username from the database
+
+        Args:
+            name (str): The username that is being searched for.
+
+        Returns:
+            dict: The dict representing the document
+        """
 
         cache = self.user_collection().document(name).get().to_dict()
         if not cache:
@@ -42,8 +50,3 @@ class DatabaseHandler:
     def get_db(self):
         return self.db
 
-
-if __name__ == "__main__":
-    db_handler = DatabaseHandler()
-    doc_ref = db_handler.user_collection().document("testing")
-    doc_ref.set({"first": "Bach"})

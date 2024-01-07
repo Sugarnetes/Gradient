@@ -1,5 +1,5 @@
 import unittest
-from server.entity_classes.account import Account
+from server.gradient.account import Account
 
 
 class MyTestCase(unittest.TestCase):

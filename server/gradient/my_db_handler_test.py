@@ -1,5 +1,5 @@
 import unittest
-from server.my_db_handler.my_db_handler import DatabaseHandler
+from server.gradient.my_db_handler import DatabaseHandler
 
 class MyTestCase(unittest.TestCase):
     def setUp(self):

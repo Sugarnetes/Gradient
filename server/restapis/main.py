@@ -33,7 +33,12 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print("WebSocket opened")
 
-    def on_message(self, message):
+    def on_message(self, message: str):
+        """Accepts message from client timer, and updates the db with the new score.
+
+        Args:
+            message (str): _description_
+        """
         db_handler = DatabaseHandler()
         name, time_spent_string = message[1:-1].split(',')
         time_spent = float(time_spent_string)
@@ -43,8 +48,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
         target_account.save_to_db(db_handler.get_db())
         
-        print(name)
-        print(time_spent)
+        print(f"{name}'s score updated")
         
 
     def on_close(self):

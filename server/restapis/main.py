@@ -71,10 +71,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         for index, user in enumerate(leaderboard_data, start=1):
             user["rank"] = index
 
-        print(leaderboard_data)
-        
+        temp = json.dumps(leaderboard_data)
+        print(temp)
         # Send the leaderboard data to the client
-        self.write_message(json.dumps(leaderboard_data))
+        self.write_message(temp)
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):

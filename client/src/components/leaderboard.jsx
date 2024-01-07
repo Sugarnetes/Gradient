@@ -19,6 +19,7 @@ const Leaderboard = () => {
         const ws = new WebSocket('ws://localhost:8888/websocket'); // Corrected URL
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            console.log(data);
             setLeaderboardData(data);
         };
         // Cleanup on component unmount

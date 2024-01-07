@@ -2,29 +2,38 @@ import React, { useState, useEffect } from 'react';
 import './leaderboard.css'; 
 
 const Leaderboard = () => {
-    // Test data for the leaderboard
-
-    /*
-    const testData = [
-        { rank: 1, name: 'Alice', score: 500 },
-        { rank: 2, name: 'Bob', score: 400 },
-        { rank: 3, name: 'Charlie', score: 300 },
-    ];
-    */
-
     const [leaderboardData, setLeaderboardData] = useState([]);
 
-    // Connect to the WebSocket when the component mounts
     useEffect(() => {
-        const ws = new WebSocket('ws://localhost:8888/websocket'); // Corrected URL
+        const ws = new WebSocket('ws://localhost:8888/websocket');
+        
+        ws.onopen = () => {
+            console.log('WebSocket Connected');
+        };
+        
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log(data);
+            console.log('Hi', data);
+
+            // Loop through each user in the data array and log them
+            data.forEach((user) => {
+                console.log('User:', user);
+            });
+
             setLeaderboardData(data);
         };
+        
+        ws.onclose = () => {
+            console.log('WebSocket Disconnected');
+        };
+        
+        ws.onerror = (error) => {
+            console.error('WebSocket Error: ', error);
+        };
+
         // Cleanup on component unmount
         return () => {
-            ws.close();
+            if (ws) ws.close();
         };
     }, []);
 
@@ -41,10 +50,10 @@ const Leaderboard = () => {
                 </thead>
                 <tbody>
                     {leaderboardData.map((entry, index) => (
-                        <tr key={index}>
+                        <tr key={entry.rank}>
                             <td>{entry.rank}</td>
-                            <td>{entry.name}</td>
-                            <td>{entry.score}</td>
+                            <td>{entry.username}</td>
+                            <td>{entry.points}</td>
                         </tr>
                     ))}
                 </tbody>

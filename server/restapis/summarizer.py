@@ -26,7 +26,7 @@ if __name__ == "__main__":
         SummarizedTopic = Summarizer()
 
         summed = SummarizedTopic.summarize(summarizer, text[0], text[1])
-        print(text[0] + summed)
+        print(text[0] + summed + '\n')
     
     print(massive_text)
         

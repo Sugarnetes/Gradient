@@ -18,11 +18,19 @@ class PdfReader():
     def extractor(self):
         # Extract text from PDF using pdf2image and pytesseract
         pages = convert_from_path(self.file_name, poppler_path=poppler_path)
-         
-        for i, page in enumerate(pages):
+        text_to_return = ""
+        for page in pages:
             text = pytesseract.image_to_string(page)
-            print(f"Page {i + 1} - {text}")
+            list_of_text = text.split('\n')
+            if list_of_text[1] == '':
+                list_of_text.pop(1)
+                list_of_text[0] = "Topic: " + list_of_text[0]
+                list_of_text.insert(1, "Bullet Points: ")
+                list_of_text[0] = list_of_text[0] + ", " + list_of_text[1]
+                list_of_text.pop(1)
+                text_to_return += list_of_text[0] + ", ".join(list_of_text[1::]) + "\n"
+        print(text_to_return)
 
 if __name__ == "__main__":
-    pdfTest = PdfReader(r"C:\umer files\Programming PREJE'S\Medicall\server\restapis\Fruit (1).pdf")
+    pdfTest = PdfReader(r"C:\umer files\Programming PREJE'S\Medicall\server\restapis\Fruit_1.pdf")
     pdfTest.extractor()

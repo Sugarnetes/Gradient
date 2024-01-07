@@ -104,7 +104,7 @@ const Timer = () => {
                     {formatTime()}
                 </div>
                 <div className="buttons">
-                    <button onClick={() => setTime(0.05)}>25 min</button>
+                    <button onClick={() => setTime(25)}>25 min</button>
                     <button onClick={() => setTime(50)}>50 min</button>
                     <button onClick={toggle}>
                         {isTimerActive ? 'Pause' : 'Start'}

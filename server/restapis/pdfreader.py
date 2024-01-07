@@ -29,7 +29,7 @@ class PdfReader():
                 list_of_text[0] = list_of_text[0] + ", " + list_of_text[1]
                 list_of_text.pop(1)
                 text_to_return += list_of_text[0] + ", ".join(list_of_text[1::]) + "\n"
-        print(text_to_return)
+        return text_to_return
 
 if __name__ == "__main__":
     pdfTest = PdfReader(r"C:\umer files\Programming PREJE'S\Medicall\server\restapis\Fruit_1.pdf")

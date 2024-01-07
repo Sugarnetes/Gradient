@@ -3,30 +3,28 @@ import './leaderboard.css';
 
 const Leaderboard = () => {
     // Test data for the leaderboard
+
+    /*
     const testData = [
         { rank: 1, name: 'Alice', score: 500 },
         { rank: 2, name: 'Bob', score: 400 },
         { rank: 3, name: 'Charlie', score: 300 },
-        // ... more test data
     ];
+    */
 
-    const [leaderboardData, setLeaderboardData] = useState(testData);
-
-    // Placeholder for WebSocket connection setup
-    const setupWebSocket = () => {
-        // This method will be used to set up the WebSocket connection
-        // and listen for messages that contain the leaderboard data.
-        // For example:
-        // const ws = new WebSocket('ws://localhost:8888/leaderboard');
-        // ws.onmessage = (event) => {
-        //     const data = JSON.parse(event.data);
-        //     setLeaderboardData(data);
-        // };
-    };
+    const [leaderboardData, setLeaderboardData] = useState([]);
 
     // Connect to the WebSocket when the component mounts
     useEffect(() => {
-        setupWebSocket();
+        const ws = new WebSocket('ws://localhost:8888/websocket'); // Corrected URL
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setLeaderboardData(data);
+        };
+        // Cleanup on component unmount
+        return () => {
+            ws.close();
+        };
     }, []);
 
     return (

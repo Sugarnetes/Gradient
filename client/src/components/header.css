@@ -1,6 +1,6 @@
 /* Add a gradient background to the header to make it stand out */
 .header {
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%);
+    background: linear-gradient(90deg, #41b6ff 0%, rgb(68, 176, 225) 100%);
     padding: 3px;
     border-radius: 3px;
     margin-bottom: 2px; /* Space after the header */

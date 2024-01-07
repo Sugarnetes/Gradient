@@ -6,6 +6,8 @@ const Timer = () => {
     const [isTimerActive, setIsActive] = useState(false);
     const [timeSelected, setTimeSelected] = useState(0);
 
+    const name = (window.location.href).split('#')[1];
+
     const toggle = () => {
         if (seconds === 0) {
             window.alert("Please select a time before starting the timer.");
@@ -41,6 +43,13 @@ const Timer = () => {
         /**
          * TODO: send the timer score over to the backend
          */
+
+        const data = {
+            username: name,
+            timeCompleted: timeSelected,
+        };
+
+        
     }
 
     useEffect(() => {
@@ -69,7 +78,7 @@ const Timer = () => {
                     {formatTime()}
                 </div>
                 <div className="buttons">
-                    <button onClick={() => setTime(0.05)}>25 min</button>
+                    <button onClick={() => setTime(25)}>25 min</button>
                     <button onClick={() => setTime(50)}>50 min</button>
                     <button onClick={toggle}>
                         {isTimerActive ? 'Pause' : 'Start'}
@@ -77,12 +86,15 @@ const Timer = () => {
                     <button onClick={reset}>End</button>
                 </div>
             </div>
-            <div>
-                <p>Time selected: {timeSelected} minutes</p>
-                <p>Timer Active: {isTimerActive ? 'Yes' : 'No'}</p> {/* Displaying the timer's active status */}
-            </div>
         </>
     );
 };
+
+/* Debug code for timer, add under button
+            <div>
+                <p>Time selected: {timeSelected} minutes</p>
+                <p>Timer Active: {isTimerActive ? 'Yes' : 'No'}</p> 
+                </div>
+*/
 
 export default Timer;

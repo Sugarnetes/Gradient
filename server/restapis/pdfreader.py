@@ -32,5 +32,5 @@ class PdfReader():
         print(text_to_return)
 
 if __name__ == "__main__":
-    pdfTest = PdfReader(r"C:\umer files\Programming PREJE'S\Medicall\server\restapis\Fruit_1.pdf")
+    pdfTest = PdfReader(r"C:\umer files\Programming PREJE'S\Gradient\server\restapis\Fruit_1.pdf")
     pdfTest.extractor()

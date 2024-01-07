@@ -1,0 +1,23 @@
+/* Add a gradient background to the header to make it stand out */
+.header {
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%);
+    padding: 3px;
+    border-radius: 3px;
+    margin-bottom: 2px; /* Space after the header */
+    color: black;
+    position: static;
+}
+
+.logo-text {
+    font-size: 2em;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: black;
+}
+
+.align-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

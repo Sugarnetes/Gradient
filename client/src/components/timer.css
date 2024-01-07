@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 40vh;
+    height: 30vh;
 }
 
 .time {
@@ -13,7 +13,7 @@
 
 .buttons {
     display: flex;
-    gap: 10px; /* Adjust the spacing between buttons */
+    gap: 5px; /* Adjust the spacing between buttons */
 }
 
 .buttons button {

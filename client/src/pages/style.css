@@ -1,8 +1,102 @@
-
-
-.home_layout{
-    padding-top: 20;
-    padding-left: 10;
-    padding-right: 10;
-    height: 90vh; 
+.home_layout {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping of flex items */
+    gap: 20px;
+    padding: 20px;
+    height: calc(90vh - 40px); /* Adjusting for padding */
+    overflow: hidden; /* Hide the overflow of the entire layout */
+    background-color: #efeff1;
 }
+
+/* If you want all grid items to maintain a static height regardless of content */
+.Grid-item {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100%; /* Prevent flex items from growing past their content in some browsers */
+}
+
+/* Adjust the Paper component to prevent overflow */
+.Paper {
+    /* ... existing styles ... */
+    background-color: white;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Hide overflow */
+}
+
+/* Prevent Paper from shrinking smaller than its content */
+.Paper-content {
+    overflow: auto; /* Allows scrolling within the Paper if content overflows */
+    min-height: 0; /* Prevent flex items from growing past their content in some browsers */
+}
+
+/* Ensure the header doesn't shrink with its content, if necessary */
+.header {
+    /* ... existing styles ... */
+    flex-shrink: 0; /* Prevent the header from shrinking */
+}
+
+/* Style adjustments for Material-UI Grid container and items */
+.MuiGrid-container {
+    height: 100%;
+}
+
+.MuiGrid-item {
+    /* Set a min-height or a fixed height as needed, and prevent flex-shrink */
+    min-height: 100px; /* Example min-height, adjust as needed */
+    flex-shrink: 0;
+}
+
+/* Additional global styles for the body to match the overall feel */
+body {
+    background-color: #edf2f7; /* Soft background color */
+    font-family: 'Roboto', 'Arial', sans-serif;
+    color: #333; /* Dark grey text for readability */
+}
+
+/* You might want to style your buttons, inputs, and other elements to match */
+.button {
+    background-color: #007bff; /* Example primary button color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darken button on hover */
+}
+
+.input {
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Table styles for the leaderboard */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* ... Add more styles as needed ... */

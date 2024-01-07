@@ -99,6 +99,7 @@ const Timer = () => {
     return (
         <>
             <div className="timer">
+                <h1>Timer</h1>
                 <div className="time">
                     {formatTime()}
                 </div>

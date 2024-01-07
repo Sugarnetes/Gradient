@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from '../components/header';
+import Upload from '../components/upload';
+import Timer from '../components/timer';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -22,7 +24,7 @@ export const Home = () => {
                 {/* Left Column - First Box */}
                 <Grid item xs>
                     <Paper style={{ height: '100%', backgroundColor: '#eee' }}>
-                    Box 1
+                        Leaderboard
                     </Paper>
                 </Grid>
 
@@ -32,7 +34,7 @@ export const Home = () => {
             {/* Middle Column */}
             <Grid item xs={6}>
                 <Paper style={{ height: '98%', backgroundColor: '#eee' }}>
-                Large Box
+                      Summary + download button
                 </Paper>
             </Grid>
 
@@ -43,14 +45,14 @@ export const Home = () => {
                 {/* Right Column - First Box */}
                 <Grid item xs>
                     <Paper style={{ height: '100%', backgroundColor: '#eee' }}>
-                    Box 3
+                        <Timer />
                     </Paper>
                 </Grid>
                 
                 {/* Right Column - Second Box */}
                 <Grid item xs>
                     <Paper style={{ height: '100%', backgroundColor: '#eee' }}>
-                    Box 4
+                        <Upload/>
                     </Paper>
                 </Grid>
                 </Grid>

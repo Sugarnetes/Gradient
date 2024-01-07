@@ -36,6 +36,11 @@ class PdfReader():
         print(list_of_content)
         return list_of_content, list_of_topics
 
+                list_of_text[0] = list_of_text[0] + ", " + list_of_text[1]
+                list_of_text.pop(1)
+                text_to_return += list_of_text[0] + ", ".join(list_of_text[1::]) + "\n"
+        return text_to_return
+
 
 if __name__ == "__main__":
     pdfTest = PdfReader(r"C:\umer files\Programming PREJE'S\Medicall\server\restapis\Fruit_1.pdf")

@@ -216,6 +216,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-firebase_credentials/hacked*
+server/firebase_credentials/hacked*
 
 .idea

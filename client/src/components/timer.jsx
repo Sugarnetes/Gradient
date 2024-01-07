@@ -4,27 +4,38 @@ import './timer.css';
 const Timer = () => {
     const [seconds, setSeconds] = useState(0);
     const [isActive, setIsActive] = useState(false);
-
-    let selected = ""; 
+    const [timeSelected, setTimeSelected] = useState(0);
 
     const toggle = () => {
         setIsActive(!isActive);
     }
 
     const reset = () => {
-        setSeconds(0);
-        setIsActive(false);
+        if (isActive && window.confirm("Are you sure you want to stop the timer?")) {
+            setSeconds(0);
+            setIsActive(false);
+            setTimeSelected(0);
+        }
     }
 
     const setTime = (minutes) => {
         setSeconds(minutes * 60);
+        setTimeSelected(minutes);
     }
 
     useEffect(() => {
         let interval = null;
         if (isActive) {
             interval = setInterval(() => {
-                setSeconds(seconds => seconds > 0 ? seconds - 1 : 0);
+                setSeconds(seconds => {
+                    if (seconds > 0) {
+                        return seconds - 1;
+                    } else {
+                        setIsActive(false);
+                        setTimeSelected(time => time > 0 ? time : 0);
+                        return 0;
+                    }
+                });
             }, 1000);
         } else if (!isActive && seconds !== 0) {
             clearInterval(interval);
@@ -39,12 +50,13 @@ const Timer = () => {
     }
 
     return (
+        <>
         <div className="timer">
             <div className="time">
                 {formatTime()}
             </div>
             <div className="buttons">
-                <button onClick={() => setTime(25)}>25 min</button>
+                <button onClick={() => setTime(0.1)}>25 min</button>
                 <button onClick={() => setTime(50)}>50 min</button>
                 <button onClick={toggle}>
                     {isActive ? 'Pause' : 'Start'}
@@ -52,6 +64,10 @@ const Timer = () => {
                 <button onClick={reset}>End</button>
             </div>
         </div>
+        <div>
+            <p>Time selected: {timeSelected}</p>
+        </div>
+        </>
     );
 };
 

@@ -29,4 +29,10 @@ class Account:
         doc_ref = db.collection("users").document(self.username)
         doc_ref.set(self.to_dict())
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.username == other.username
+        else:
+            return False
+
    

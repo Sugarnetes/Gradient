@@ -59,7 +59,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print("WebSocket closed")
     
     def update_leaderboard(self):
-        db_handler = DatabaseHandler('server/firebase_credentials/hacked24-60c88-firebase-adminsdk-5fu9m-0ba7ceb240.json')
+        db_handler = DatabaseHandler()
         all_users = db_handler.get_all_users_points()
         leaderboard_data = [
             {"username": user.username, "points": user.points}

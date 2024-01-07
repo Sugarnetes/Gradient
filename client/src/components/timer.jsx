@@ -6,6 +6,8 @@ const Timer = () => {
     const [isTimerActive, setIsActive] = useState(false);
     const [timeSelected, setTimeSelected] = useState(0);
 
+    const name = (window.location.href).split('#')[1];
+
     const toggle = () => {
         if (seconds === 0) {
             window.alert("Please select a time before starting the timer.");
@@ -41,6 +43,13 @@ const Timer = () => {
         /**
          * TODO: send the timer score over to the backend
          */
+
+        const data = {
+            username: name,
+            timeCompleted: timeSelected,
+        };
+
+        
     }
 
     useEffect(() => {

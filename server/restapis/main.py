@@ -36,10 +36,6 @@ class UploadHandler(tornado.web.RequestHandler):
             output_file = open(output_file_path, 'wb')
             output_file.write(file_data['body'])
             output_file.close()
-            pdf_test = PdfReader(output_file_path)
-
-            self.finish(pdf_test.extractor())
-
 
 def make_app():
     return tornado.web.Application([

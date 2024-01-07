@@ -137,19 +137,17 @@ export const Upload = () => {
         <div
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
+            top: '135%',
+            left: '30%',
             transform: 'translate(-50%, -50%)',
-            border: '1px solid black',
-            padding: '10px',
             backgroundColor: 'white'
           }}
         >
           <iframe
             title="PDF Viewer"
             src={location.url}
-            width="400"
-            height="300"
+            width="200%"
+            height="20%"
             style={{ border: 'none' }}
           />
         </div>

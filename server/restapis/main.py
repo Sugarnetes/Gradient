@@ -26,7 +26,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print("WebSocket opened")
 
     def on_message(self, message):
-        print(message)
+        name, score = message[1:-1].split(',')
+        print(name)
+        print(score)
 
     def on_close(self):
         print("WebSocket closed")

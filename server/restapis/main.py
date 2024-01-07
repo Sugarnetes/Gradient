@@ -6,6 +6,7 @@ import tornado.websocket
 import os.path
 import random
 import string
+from summarizer import Summarize
 from pdfreader import PdfReader
 
 class Application(tornado.web.Application):
@@ -57,11 +58,12 @@ class UploadHandler(tornado.web.RequestHandler):
             sanitized_file_name = ''.join(c for c in file_name if c.isalnum() or c in ['.', '_', '-'])
             output_file_path = os.path.join(upload_path, sanitized_file_name)
             print("Saving file to:", output_file_path)
-
             output_file = open(output_file_path, 'wb')
             output_file.write(file_data)
             output_file.close()
 
+            ans = Summarize(output_file_path)
+            ans.execute_summary()
             self.write('File uploaded successfully!')
         else:
             self.set_status(400)

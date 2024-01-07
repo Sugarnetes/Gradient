@@ -14,7 +14,7 @@ summarizer = HuggingFaceHub(
 )
 
 
-class Summarizer:
+class Summarize():
 
     def __init__(self, pdf):
         self.pdfTest = PdfReader(pdf)
@@ -45,5 +45,5 @@ class Summarizer:
 
 
 if __name__ == "__main__":
-    pdfTest = Summarizer(r"C:\umer files\Programming PREJE'S\Gradient\server\restapis\denis.pdf")
+    pdfTest = Summarize(r"C:\umer files\Programming PREJE'S\Gradient\server\restapis\denis.pdf")
     pdfTest.execute_summary()

@@ -1,6 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from account import Account
 
 
 class DatabaseHandler:
@@ -29,8 +30,25 @@ class DatabaseHandler:
         docs = self.user_collection().stream()
         return [converter_function(x.to_dict()) for x in docs]
 
+    def get_all_users_points(self, converter_function):
+        query = self.user_collection().order_by("points", direction=firestore.Query.DESCENDING)
+        docs = query.stream()
+    
+        return [converter_function(x.to_dict()) for x in docs]
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
     doc_ref = db_handler.user_collection().document("testing")
     doc_ref.set({"first": "Bach"})
+
+    all_users = db_handler.get_all_users_points(Account.from_dict)
+
+    if all_users:
+        print("All Users:")
+        for user in all_users:
+            print("Username:", user.username)
+            print("Time Spent:", user.time_spent)
+            print("Points:", user.points)
+            print("---")
+    else:
+        print("No users found.")

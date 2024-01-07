@@ -1,6 +1,8 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from account import Account
+from account import Account
 
 
 class DatabaseHandler:
@@ -17,7 +19,7 @@ class DatabaseHandler:
         """
         return self.db.collection("users")
 
-    def get_all_users(self, converter_function):
+    def get_all_users(self):
         """Returns all the users
 
         Param:
@@ -25,12 +27,21 @@ class DatabaseHandler:
         Returns:
             _type_: _description_
         """
-
         docs = self.user_collection().stream()
-        return [converter_function(x.to_dict()) for x in docs]
+        return [Account.from_dict(x.to_dict()) for x in docs]
+       
 
+    def save_to_db(self, db):
+        doc_ref = db.collection("users").document(self.username)
+        doc_ref.set(self.to_dict())
+    def save_to_db(self, db):
+        doc_ref = db.collection("users").document(self.username)
+        doc_ref.set(self.to_dict())
 
 if __name__ == "__main__":
     db_handler = DatabaseHandler()
     doc_ref = db_handler.user_collection().document("testing")
     doc_ref.set({"first": "Bach"})
+    all_users = db_handler.get_all_users()
+    for user in all_users:
+        print(f"Username: {user.username}")

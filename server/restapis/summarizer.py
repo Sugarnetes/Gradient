@@ -6,7 +6,7 @@ from docx import Document
 from docx.shared import Inches
 from docx2pdf import convert
 
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = ""
 
 summarizer = HuggingFaceHub(
     repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1",
